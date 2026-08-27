@@ -77,9 +77,9 @@ export function convertGooglePlayItemToPlatform(item: GooglePlayScraperItem): Pl
   })() : undefined);
   
   const id = item.id || (appId ? appId.replace(/[^a-zA-Z0-9]/g, '_') : `gplay_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`);
+  const domain = item.domain || (appId ? `${appId.split('.').reverse()[0] || 'app'}.com` : undefined);
   
-  const posterUrl = item.posterUrl || item.poster_url || (item.screenshots && item.screenshots[0]) || 'https://play-lh.googleusercontent.com/O-OR6Mh0AoNyiaYYaa3OJ_VHGfLqWW2qNzUUZxRRodD3fqs2Pm04FatavdNbz-jsMZM=w720-h1280';
-  const iconUrl = item.icon_url || item.icon || (posterUrl.includes('googleusercontent.com') ? posterUrl.replace(/=w\d+-h\d+/, '=w200-h200') : posterUrl);
+  const iconUrl = item.iconUrl || item.icon_url || item.icon || (domain ? `https://www.google.com/s2/favicons?domain=${domain}&sz=128` : 'https://play-lh.googleusercontent.com/O-OR6Mh0AoNyiaYYaa3OJ_VHGfLqWW2qNzUUZxRRodD3fqs2Pm04FatavdNbz-jsMZM=w200-h200');
   
   const playStoreUrl = item.playStoreUrl || (appId ? `https://play.google.com/store/apps/details?id=${appId}` : item.platform_url || 'https://play.google.com');
   const appStoreUrl = item.appStoreUrl || item.app_store_url;
@@ -97,9 +97,9 @@ export function convertGooglePlayItemToPlatform(item: GooglePlayScraperItem): Pl
     developer: item.developer || 'Verified Mobile Studio',
     tagline: item.tagline || `Top rated ${genre} vertical series platform`,
     description: desc.slice(0, 260) + (desc.length > 260 ? '…' : ''),
+    domain,
+    iconUrl,
     icon_url: iconUrl,
-    poster_url: posterUrl,
-    posterUrl: posterUrl,
     platform_url: playStoreUrl,
     playStoreUrl: playStoreUrl,
     app_store_url: appStoreUrl,
@@ -136,11 +136,12 @@ export const CURATED_GOOGLE_PLAY_PRESETS: GooglePlayScraperItem[] = [
   {
     id: "reelshort",
     appId: "com.reelshort.app",
+    domain: "reelshort.com",
     title: "ReelShort - Short Dramas",
     genre: "Billionaire & Romance",
     rating: 4.8,
     downloads: "10M+",
-    posterUrl: "https://play-lh.googleusercontent.com/O-OR6Mh0AoNyiaYYaa3OJ_VHGfLqWW2qNzUUZxRRodD3fqs2Pm04FatavdNbz-jsMZM=w720-h1280",
+    iconUrl: "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/30/ca/4f/30ca4fa2-bc42-3b24-11fa-ef3661be4949/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/256x256bb.jpg",
     playStoreUrl: "https://play.google.com/store/apps/details?id=com.reelshort.app",
     appStoreUrl: "https://apps.apple.com/app/id1636270631",
     developer: "Crazy Maple Studio / COL Group",
@@ -149,11 +150,12 @@ export const CURATED_GOOGLE_PLAY_PRESETS: GooglePlayScraperItem[] = [
   {
     id: "dramabox",
     appId: "com.storymatrix.drama",
+    domain: "dramabox.com",
     title: "DramaBox - Stream Drama Shorts",
     genre: "Revenge & Betrayal",
     rating: 4.8,
     downloads: "5M+",
-    posterUrl: "https://play-lh.googleusercontent.com/r7YmB38jG2n9vM_1N_C9eG3wT2t2t5i2m1c1k1k1v1k1v1k1v1k1v1k1v1k1v1k=w720-h1280",
+    iconUrl: "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/09/b8/b5/09b8b5ea-1678-7b83-a417-7612f0f5b11a/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/256x256bb.jpg",
     playStoreUrl: "https://play.google.com/store/apps/details?id=com.storymatrix.drama",
     appStoreUrl: "https://apps.apple.com/us/app/dramabox-stream-drama-shorts/id6445905219",
     developer: "StoryMatrix",
@@ -162,11 +164,12 @@ export const CURATED_GOOGLE_PLAY_PRESETS: GooglePlayScraperItem[] = [
   {
     id: "shortmax",
     appId: "live.shorttv.apps",
+    domain: "shortmax.com",
     title: "ShortMax - Watch Dramas & Shows",
     genre: "CEO & Mystery",
     rating: 4.8,
     downloads: "8M+",
-    posterUrl: "https://play-lh.googleusercontent.com/O-OR6Mh0AoNyiaYYaa3OJ_VHGfLqWW2qNzUUZxRRodD3fqs2Pm04FatavdNbz-jsMZM=w720-h1280",
+    iconUrl: "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/eb/fa/d7/ebfad733-4f2b-8a8b-4b10-6ec9908cf67d/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/256x256bb.jpg",
     playStoreUrl: "https://play.google.com/store/apps/details?id=live.shorttv.apps",
     appStoreUrl: "https://apps.apple.com/us/app/shortmax-watch-dramas-shows/id6463402431",
     developer: "ShortMax Video",
@@ -175,11 +178,12 @@ export const CURATED_GOOGLE_PLAY_PRESETS: GooglePlayScraperItem[] = [
   {
     id: "serealplus",
     appId: "com.sereal.app",
+    domain: "serealplus.com",
     title: "Sereal+ - Drama & Romance",
     genre: "Paranormal & Werewolf",
     rating: 4.8,
     downloads: "3M+",
-    posterUrl: "https://play-lh.googleusercontent.com/O-OR6Mh0AoNyiaYYaa3OJ_VHGfLqWW2qNzUUZxRRodD3fqs2Pm04FatavdNbz-jsMZM=w720-h1280",
+    iconUrl: "https://is1-ssl.mzstatic.com/image/thumb/Purple112/v4/44/e9/a3/44e9a385-d8aa-ecda-aa1c-3c35b546e1ce/AppIcon-0-0-1x_U007emarketing-0-7-0-85-220.png/256x256bb.jpg",
     playStoreUrl: "https://play.google.com/store/apps/details?id=com.sereal.app",
     appStoreUrl: "https://apps.apple.com/us/app/id6450622288",
     developer: "Sereal Plus Team",

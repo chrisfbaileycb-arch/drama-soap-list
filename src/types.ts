@@ -7,6 +7,7 @@ export interface GooglePlayScraperItem {
   appId?: string;
   title?: string;
   name?: string;
+  domain?: string;
   genre?: string;
   content_focus?: ContentFocus;
   rating?: number;
@@ -19,6 +20,7 @@ export interface GooglePlayScraperItem {
   poster_url?: string;
   icon?: string;
   icon_url?: string;
+  iconUrl?: string;
   screenshots?: string[];
   playStoreUrl?: string;
   platform_url?: string;
@@ -36,9 +38,14 @@ export interface Platform {
   id: string;
   name: string;
   developer: string;
+  publisher?: string;
   tagline: string;
   description: string;
+  domain?: string;
+  websiteUrl?: string;
   icon_url: string;
+  iconUrl?: string;
+  logoUrl?: string;
   poster_url?: string;
   posterUrl?: string;
   platform_url: string;

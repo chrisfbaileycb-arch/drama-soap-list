@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { 
   Sparkles, ChevronLeft, ChevronRight, Star, Download, Play, 
-  Apple, PlayCircle, PauseCircle, Film, Volume2, VolumeX, Eye
+  Apple, PlayCircle, PauseCircle, Volume2, VolumeX, ShieldCheck, CheckCircle2,
+  ExternalLink, Layers
 } from 'lucide-react';
 import { useApp } from '@/contexts/AppContext';
 import { Platform } from '@/types';
@@ -58,12 +59,18 @@ export const SpotlightCarousel: React.FC<SpotlightCarouselProps> = ({ onSelectPl
   if (total === 0) return null;
 
   const activePlatform = items[activeIndex];
-  const posterUrl = activePlatform.poster_url || 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&h=1067&q=80';
+
+  const playUrl = activePlatform.playStoreUrl || (activePlatform.platform_url?.includes('play.google.com')
+    ? activePlatform.platform_url
+    : `https://play.google.com/store/search?q=${encodeURIComponent(activePlatform.name)}&c=apps`);
+
+  const appleUrl = activePlatform.appStoreUrl || activePlatform.app_store_url ||
+    `https://apps.apple.com/us/search?term=${encodeURIComponent(activePlatform.name)}`;
 
   return (
     <div className="relative rounded-3xl bg-white border border-[#E7DFD5] p-5 sm:p-8 mb-10 overflow-hidden shadow-xl warm-card-shadow">
       
-      {/* Ambient Warm Theater Projector Lighting */}
+      {/* Ambient Warm Lighting */}
       <div className="absolute top-0 right-1/3 w-72 h-72 bg-[#D97706]/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-1/3 w-72 h-72 bg-[#15803D]/10 rounded-full blur-3xl pointer-events-none" />
 
@@ -75,15 +82,15 @@ export const SpotlightCarousel: React.FC<SpotlightCarouselProps> = ({ onSelectPl
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="text-lg sm:text-xl font-extrabold text-[#1C1917] tracking-tight font-['Cinzel',serif]">
-                Spotlight Showcase
+              <h2 className="text-lg sm:text-xl font-extrabold text-[#1C1917] tracking-tight">
+                Featured App Spotlight
               </h2>
               <span className="px-2 py-0.5 text-[10px] font-black uppercase tracking-wider bg-[#15803D]/10 text-[#15803D] border border-[#15803D]/25 rounded-full">
-                Featured 10
+                Top 10 Apps
               </span>
             </div>
             <p className="text-xs text-[#78716C]">
-              Curated top-performing mini-drama publishers with verified production catalogs
+              Curated top-performing mini-drama publishers with official store apps
             </p>
           </div>
         </div>
@@ -113,7 +120,7 @@ export const SpotlightCarousel: React.FC<SpotlightCarouselProps> = ({ onSelectPl
                 ? 'bg-[#FEF3C7] text-[#D97706] border-[#FDE68A]' 
                 : 'bg-[#FAF8F5] text-[#78716C] border-[#E7DFD5]'
             }`}
-            title={isMuted ? 'Unmute theater chime' : 'Mute theater chime'}
+            title={isMuted ? 'Unmute chime' : 'Mute chime'}
           >
             {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
           </button>
@@ -140,38 +147,45 @@ export const SpotlightCarousel: React.FC<SpotlightCarouselProps> = ({ onSelectPl
       {/* Main Spotlight Highlight Area */}
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
         
-        {/* Active Poster Preview (9:16 Aspect) */}
+        {/* Active App Tile Showcase Box */}
         <div className="lg:col-span-4 flex justify-center">
           <div 
             onClick={() => onSelectPlatform(activePlatform)}
-            className="relative w-56 sm:w-64 aspect-[9/14] rounded-3xl overflow-hidden bg-[#F5F2EB] border-2 border-[#E7DFD5] shadow-xl hover:border-[#15803D] transition-all duration-300 cursor-pointer group"
+            className="w-full max-w-xs rounded-3xl bg-[#FAF8F5] border-2 border-[#E7DFD5] p-6 shadow-md hover:border-[#15803D] transition-all duration-300 cursor-pointer group flex flex-col items-center text-center"
           >
-            <img
-              src={posterUrl}
-              alt={activePlatform.name}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 flex flex-col justify-between p-4">
-              <div className="flex justify-between items-center">
-                <span className="px-2.5 py-1 rounded-full bg-[#15803D] text-white text-[10px] font-black uppercase">
-                  {activePlatform.content_focus}
-                </span>
-                <span className="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-xs text-amber-300 text-[10px] font-bold flex items-center gap-1">
-                  <Star className="w-3 h-3 fill-amber-300" />
-                  {activePlatform.rating.toFixed(1)}
-                </span>
-              </div>
-
-              <div>
-                <div className="text-white font-extrabold text-base leading-tight drop-shadow-md mb-1">
-                  {activePlatform.name}
-                </div>
-                <div className="text-white/80 text-[11px] font-medium flex items-center gap-1">
-                  <Eye className="w-3 h-3 text-[#22C55E]" />
-                  <span>Click to view trailer & episodes</span>
-                </div>
-              </div>
+            {/* Large Rounded Square App Icon */}
+            <div className="relative w-28 h-28 rounded-3xl overflow-hidden bg-[#FAF8F5] border-2 border-[#E7DFD5] shadow-lg mb-4 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+              <img
+                src={activePlatform.logoUrl || `https://www.google.com/s2/favicons?domain=${activePlatform.domain}&sz=128`}
+                alt={activePlatform.name}
+                className="w-full h-full object-cover rounded-3xl"
+              />
+              <span className="absolute top-2 right-2 px-1.5 py-0.5 rounded-full bg-amber-400 text-[#1C1917] text-[9px] font-black uppercase shadow-xs">
+                ★ {activePlatform.rating.toFixed(1)}
+              </span>
             </div>
+
+            <h4 className="text-lg font-black text-[#1C1917] group-hover:text-[#15803D] transition-colors mb-1 truncate max-w-full">
+              {activePlatform.name}
+            </h4>
+
+            <p className="text-xs text-[#78716C] font-semibold mb-3 truncate max-w-full">
+              {activePlatform.publisher || activePlatform.developer}
+            </p>
+
+            <div className="flex items-center gap-2 mb-4">
+              <span className="px-2.5 py-0.5 rounded-full bg-[#15803D]/10 text-[#15803D] text-[11px] font-extrabold uppercase">
+                {activePlatform.content_focus}
+              </span>
+              <span className="px-2.5 py-0.5 rounded-full bg-[#F5F2EB] text-[#57534E] text-[11px] font-bold">
+                {activePlatform.download_count} installs
+              </span>
+            </div>
+
+            <span className="text-xs font-bold text-[#15803D] group-hover:underline flex items-center gap-1">
+              <span>View Full App Specs</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </span>
           </div>
         </div>
 
@@ -195,7 +209,7 @@ export const SpotlightCarousel: React.FC<SpotlightCarouselProps> = ({ onSelectPl
               {activePlatform.name}
             </h3>
             <p className="text-xs sm:text-sm text-[#78716C] font-semibold mt-0.5">
-              Developed by {activePlatform.developer}
+              Published by {activePlatform.publisher || activePlatform.developer}
             </p>
           </div>
 
@@ -218,7 +232,7 @@ export const SpotlightCarousel: React.FC<SpotlightCarouselProps> = ({ onSelectPl
           {/* Store Download & Detail Action Buttons */}
           <div className="flex flex-wrap items-center gap-3 pt-3">
             <a
-              href={activePlatform.platform_url}
+              href={playUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="px-5 py-2.5 rounded-xl bg-[#15803D] hover:bg-[#166534] text-white font-extrabold text-xs sm:text-sm flex items-center gap-2 transition-all shadow-md shadow-[#15803D]/20 cursor-pointer"
@@ -227,9 +241,9 @@ export const SpotlightCarousel: React.FC<SpotlightCarouselProps> = ({ onSelectPl
               <span>Google Play</span>
             </a>
 
-            {activePlatform.app_store_url && (
+            {(activePlatform.appStoreUrl || activePlatform.app_store_url) && (
               <a
-                href={activePlatform.app_store_url}
+                href={appleUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-5 py-2.5 rounded-xl bg-white hover:bg-[#F5F2EB] border border-[#D8D1C5] hover:border-[#15803D] text-[#1C1917] font-extrabold text-xs sm:text-sm flex items-center gap-2 transition-all shadow-2xs cursor-pointer"
@@ -243,7 +257,7 @@ export const SpotlightCarousel: React.FC<SpotlightCarouselProps> = ({ onSelectPl
               onClick={() => onSelectPlatform(activePlatform)}
               className="px-4 py-2.5 rounded-xl bg-[#FAF8F5] hover:bg-[#E7DFD5] text-[#57534E] hover:text-[#1C1917] font-bold text-xs sm:text-sm transition-colors cursor-pointer"
             >
-              Full Profile & Trailers
+              Full Profile
             </button>
           </div>
 
@@ -260,17 +274,17 @@ export const SpotlightCarousel: React.FC<SpotlightCarouselProps> = ({ onSelectPl
                     setActiveIndex(idx);
                     playCinemaSound();
                   }}
-                  className={`w-11 h-11 rounded-xl overflow-hidden flex-shrink-0 border-2 transition-all cursor-pointer ${
+                  className={`w-11 h-11 rounded-xl overflow-hidden flex-shrink-0 border-2 bg-[#FAF8F5] flex items-center justify-center transition-all cursor-pointer ${
                     activeIndex === idx
                       ? 'border-[#15803D] scale-110 shadow-md ring-2 ring-[#15803D]/30'
-                      : 'border-transparent opacity-60 hover:opacity-100'
+                      : 'border-[#E7DFD5] opacity-70 hover:opacity-100'
                   }`}
                   title={p.name}
                 >
                   <img
-                    src={p.icon_url}
+                    src={p.logoUrl || `https://www.google.com/s2/favicons?domain=${p.domain}&sz=128`}
                     alt={p.name}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover rounded-lg"
                   />
                 </button>
               ))}
@@ -284,3 +298,4 @@ export const SpotlightCarousel: React.FC<SpotlightCarouselProps> = ({ onSelectPl
     </div>
   );
 };
+
