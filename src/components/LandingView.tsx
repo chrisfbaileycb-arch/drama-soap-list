@@ -142,8 +142,11 @@ export const LandingView: React.FC<LandingViewProps> = ({
                           <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-[#FAF8F5] border border-[#E7DFD5] flex-shrink-0 flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
                             <img
                               src={app.logoUrl || `https://www.google.com/s2/favicons?domain=${app.domain}&sz=128`}
-                              alt={app.name}
+                              alt={`${app.name} icon`}
                               className="w-12 h-12 rounded-xl object-cover"
+                              onError={(e) => {
+                                (e.target as HTMLImageElement).src = `https://www.google.com/s2/favicons?domain=${app.domain || 'google.com'}&sz=128`;
+                              }}
                             />
                           </div>
 

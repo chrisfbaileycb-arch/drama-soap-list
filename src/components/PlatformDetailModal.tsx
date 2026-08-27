@@ -106,18 +106,14 @@ export const PlatformDetailModal: React.FC<PlatformDetailModalProps> = ({ platfo
           {/* Main App Overview Row: Square App Icon + Key Identity */}
           <div className="flex items-start gap-5 mb-6">
             <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-3xl overflow-hidden bg-[#FAF8F5] border-2 border-[#E7DFD5] shadow-md flex-shrink-0 flex items-center justify-center">
-              {!imgError && iconSrc ? (
-                <img
-                  src={iconSrc}
-                  alt={platform.name}
-                  className="w-full h-full object-cover rounded-3xl"
-                  onError={() => setImgError(true)}
-                />
-              ) : (
-                <div className="w-full h-full bg-[#15803D] flex items-center justify-center font-black text-white text-3xl select-none">
-                  {initialLetter}
-                </div>
-              )}
+              <img
+                src={iconSrc}
+                alt={`${platform.name} icon`}
+                className="w-full h-full object-cover rounded-3xl"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+                }}
+              />
             </div>
 
             <div className="flex-1 min-w-0">

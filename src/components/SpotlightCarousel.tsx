@@ -157,8 +157,11 @@ export const SpotlightCarousel: React.FC<SpotlightCarouselProps> = ({ onSelectPl
             <div className="relative w-28 h-28 rounded-3xl overflow-hidden bg-[#FAF8F5] border-2 border-[#E7DFD5] shadow-lg mb-4 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
               <img
                 src={activePlatform.logoUrl || `https://www.google.com/s2/favicons?domain=${activePlatform.domain}&sz=128`}
-                alt={activePlatform.name}
+                alt={`${activePlatform.name} icon`}
                 className="w-full h-full object-cover rounded-3xl"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = `https://www.google.com/s2/favicons?domain=${activePlatform.domain || 'google.com'}&sz=128`;
+                }}
               />
               <span className="absolute top-2 right-2 px-1.5 py-0.5 rounded-full bg-amber-400 text-[#1C1917] text-[9px] font-black uppercase shadow-xs">
                 ★ {activePlatform.rating.toFixed(1)}
@@ -283,8 +286,11 @@ export const SpotlightCarousel: React.FC<SpotlightCarouselProps> = ({ onSelectPl
                 >
                   <img
                     src={p.logoUrl || `https://www.google.com/s2/favicons?domain=${p.domain}&sz=128`}
-                    alt={p.name}
+                    alt={`${p.name} icon`}
                     className="w-full h-full object-cover rounded-lg"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = `https://www.google.com/s2/favicons?domain=${p.domain || 'google.com'}&sz=128`;
+                    }}
                   />
                 </button>
               ))}

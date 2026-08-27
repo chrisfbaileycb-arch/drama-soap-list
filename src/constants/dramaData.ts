@@ -1375,13 +1375,17 @@ const RAW_PLATFORMS: Platform[] = [
 
 export const INITIAL_PLATFORMS: Platform[] = RAW_PLATFORMS.map((p) => {
   const domain = p.domain || (p.websiteUrl ? p.websiteUrl.replace(/^https?:\/\//, '').replace(/\/.*$/, '') : 'google.com');
-  const icon = SPECIFIC_APP_ICONS[p.id.toLowerCase()] || `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+  const icon = SPECIFIC_APP_ICONS[p.id.toLowerCase()] || p.logoUrl || `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+  const playStore = p.playStoreUrl || (p.platform_url?.includes('play.google.com') ? p.platform_url : `https://play.google.com/store/search?q=${encodeURIComponent(p.name)}&c=apps`);
+  const appStore = p.appStoreUrl || p.app_store_url || `https://apps.apple.com/us/search?term=${encodeURIComponent(p.name)}`;
   return {
     ...p,
     domain,
-    logoUrl: p.logoUrl || icon,
-    iconUrl: p.iconUrl || icon,
-    icon_url: p.icon_url || icon,
+    logoUrl: icon,
+    iconUrl: icon,
+    icon_url: icon,
+    playStoreUrl: playStore,
+    appStoreUrl: appStore,
   };
 });
 

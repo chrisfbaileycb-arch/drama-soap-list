@@ -24,11 +24,14 @@ export const PlatformCard: React.FC<PlatformCardProps> = ({ platform, onSelect }
       <div>
         <div className="flex items-start gap-3.5 mb-3.5">
           {/* Rounded Square App Icon */}
-          <div className="relative w-12 h-12 rounded-xl shadow-xs border border-[#E7DFD5] bg-[#F5F2EB] flex-shrink-0 overflow-hidden flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
+          <div className="relative flex-shrink-0">
             <img
               src={platform.logoUrl || `https://www.google.com/s2/favicons?domain=${platform.domain}&sz=128`}
-              alt={platform.name}
-              className="w-12 h-12 rounded-xl object-cover"
+              alt={`${platform.name} icon`}
+              className="w-14 h-14 rounded-2xl object-cover border border-[#E7DFD5] bg-[#F5F2EB] shadow-xs flex-shrink-0"
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = `https://www.google.com/s2/favicons?domain=${platform.domain || 'google.com'}&sz=128`;
+              }}
             />
             {platform.featured && (
               <span className="absolute -bottom-0.5 -right-0.5 flex h-3 w-3">

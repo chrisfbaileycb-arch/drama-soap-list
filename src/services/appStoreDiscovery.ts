@@ -79,7 +79,7 @@ export function convertGooglePlayItemToPlatform(item: GooglePlayScraperItem): Pl
   const id = item.id || (appId ? appId.replace(/[^a-zA-Z0-9]/g, '_') : `gplay_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`);
   const domain = item.domain || (appId ? `${appId.split('.').reverse()[0] || 'app'}.com` : undefined);
   
-  const iconUrl = item.iconUrl || item.icon_url || item.icon || (domain ? `https://www.google.com/s2/favicons?domain=${domain}&sz=128` : 'https://play-lh.googleusercontent.com/O-OR6Mh0AoNyiaYYaa3OJ_VHGfLqWW2qNzUUZxRRodD3fqs2Pm04FatavdNbz-jsMZM=w200-h200');
+  const logoUrl = item.logoUrl || item.iconUrl || item.icon_url || item.icon || (domain ? `https://www.google.com/s2/favicons?domain=${domain}&sz=128` : 'https://www.google.com/s2/favicons?domain=google.com&sz=128');
   
   const playStoreUrl = item.playStoreUrl || (appId ? `https://play.google.com/store/apps/details?id=${appId}` : item.platform_url || 'https://play.google.com');
   const appStoreUrl = item.appStoreUrl || item.app_store_url;
@@ -98,8 +98,9 @@ export function convertGooglePlayItemToPlatform(item: GooglePlayScraperItem): Pl
     tagline: item.tagline || `Top rated ${genre} vertical series platform`,
     description: desc.slice(0, 260) + (desc.length > 260 ? '…' : ''),
     domain,
-    iconUrl,
-    icon_url: iconUrl,
+    logoUrl,
+    iconUrl: logoUrl,
+    icon_url: logoUrl,
     platform_url: playStoreUrl,
     playStoreUrl: playStoreUrl,
     app_store_url: appStoreUrl,
@@ -135,58 +136,62 @@ export function parseGooglePlayScraperJson(rawInput: string | GooglePlayScraperI
 export const CURATED_GOOGLE_PLAY_PRESETS: GooglePlayScraperItem[] = [
   {
     id: "reelshort",
-    appId: "com.reelshort.app",
+    appId: "com.newleaf.chsp",
     domain: "reelshort.com",
     title: "ReelShort - Short Dramas",
     genre: "Billionaire & Romance",
     rating: 4.8,
     downloads: "10M+",
+    logoUrl: "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/30/ca/4f/30ca4fa2-bc42-3b24-11fa-ef3661be4949/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/256x256bb.jpg",
     iconUrl: "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/30/ca/4f/30ca4fa2-bc42-3b24-11fa-ef3661be4949/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/256x256bb.jpg",
-    playStoreUrl: "https://play.google.com/store/apps/details?id=com.reelshort.app",
-    appStoreUrl: "https://apps.apple.com/app/id1636270631",
+    playStoreUrl: "https://play.google.com/store/apps/details?id=com.newleaf.chsp",
+    appStoreUrl: "https://apps.apple.com/us/app/reelshort-short-movie-tv/id6444075114",
     developer: "Crazy Maple Studio / COL Group",
     description: "ReelShort is an HD streaming platform featuring bite-sized vertical drama series including billionaire husbands, alpha wolves, and secret heirs."
   },
   {
     id: "dramabox",
-    appId: "com.storymatrix.drama",
+    appId: "com.storymatrix.dramabox",
     domain: "dramabox.com",
     title: "DramaBox - Stream Drama Shorts",
     genre: "Revenge & Betrayal",
     rating: 4.8,
     downloads: "5M+",
+    logoUrl: "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/09/b8/b5/09b8b5ea-1678-7b83-a417-7612f0f5b11a/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/256x256bb.jpg",
     iconUrl: "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/09/b8/b5/09b8b5ea-1678-7b83-a417-7612f0f5b11a/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/256x256bb.jpg",
-    playStoreUrl: "https://play.google.com/store/apps/details?id=com.storymatrix.drama",
+    playStoreUrl: "https://play.google.com/store/apps/details?id=com.storymatrix.dramabox",
     appStoreUrl: "https://apps.apple.com/us/app/dramabox-stream-drama-shorts/id6445905219",
-    developer: "StoryMatrix",
+    developer: "STORYMATRIX PTE. LTD.",
     description: "DramaBox delivers gripping urban family drama, betrayal sequences, and CEO revenge cycles with high production values."
   },
   {
     id: "shortmax",
-    appId: "live.shorttv.apps",
+    appId: "com.topshort.android",
     domain: "shortmax.com",
-    title: "ShortMax - Watch Dramas & Shows",
+    title: "ShortMax - Watch Short Dramas",
     genre: "CEO & Mystery",
     rating: 4.8,
     downloads: "8M+",
+    logoUrl: "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/eb/fa/d7/ebfad733-4f2b-8a8b-4b10-6ec9908cf67d/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/256x256bb.jpg",
     iconUrl: "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/eb/fa/d7/ebfad733-4f2b-8a8b-4b10-6ec9908cf67d/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/256x256bb.jpg",
-    playStoreUrl: "https://play.google.com/store/apps/details?id=live.shorttv.apps",
-    appStoreUrl: "https://apps.apple.com/us/app/shortmax-watch-dramas-shows/id6463402431",
+    playStoreUrl: "https://play.google.com/store/apps/details?id=com.topshort.android",
+    appStoreUrl: "https://apps.apple.com/us/app/shortmax-watch-short-dramas/id6468903332",
     developer: "ShortMax Video",
     description: "ShortMax offers fast-paced secret-identity storylines and cliffhanger hooks structured in quick 1-2 minute mobile episodes."
   },
   {
     id: "serealplus",
-    appId: "com.sereal.app",
+    appId: "com.sereal.plus",
     domain: "serealplus.com",
     title: "Sereal+ - Drama & Romance",
     genre: "Paranormal & Werewolf",
     rating: 4.8,
     downloads: "3M+",
-    iconUrl: "https://is1-ssl.mzstatic.com/image/thumb/Purple112/v4/44/e9/a3/44e9a385-d8aa-ecda-aa1c-3c35b546e1ce/AppIcon-0-0-1x_U007emarketing-0-7-0-85-220.png/256x256bb.jpg",
-    playStoreUrl: "https://play.google.com/store/apps/details?id=com.sereal.app",
-    appStoreUrl: "https://apps.apple.com/us/app/id6450622288",
-    developer: "Sereal Plus Team",
+    logoUrl: "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/d5/07/28/d50728c3-4217-1f9e-6447-b8d42d38686e/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/256x256bb.jpg",
+    iconUrl: "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/d5/07/28/d50728c3-4217-1f9e-6447-b8d42d38686e/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/256x256bb.jpg",
+    playStoreUrl: "https://play.google.com/store/apps/details?id=com.sereal.plus",
+    appStoreUrl: "https://apps.apple.com/us/app/sereal-drama-shorts/id6471850125",
+    developer: "SerealPlus Team",
     description: "Sereal+ blends romance with paranormal drama — lycan kings, forbidden alphas, and billionaire heiresses across episodic short-form seasons."
   }
 ];
@@ -198,7 +203,7 @@ function itunesResultToPlatform(result: ItunesResult, knownIds: Set<string>): Pl
   const icon =
     result.artworkUrl512 ||
     result.artworkUrl100 ||
-    `https://picsum.photos/seed/app_${result.trackId}/200/200`;
+    `https://www.google.com/s2/favicons?domain=apple.com&sz=128`;
 
   const rating = result.averageUserRating ?? 4.0;
   const reviewCount = result.userRatingCount ?? 0;
@@ -212,9 +217,9 @@ function itunesResultToPlatform(result: ItunesResult, knownIds: Set<string>): Pl
     developer: result.sellerName ?? 'Unknown Developer',
     tagline: `Discovered on the App Store — ${genres[0] ?? 'Drama'} streaming app`,
     description: description.slice(0, 220) + (description.length > 220 ? '…' : ''),
+    logoUrl: icon,
     icon_url: icon,
-    poster_url: icon,
-    posterUrl: icon,
+    iconUrl: icon,
     platform_url: `https://play.google.com/store/search?q=${encodeURIComponent(name)}&c=apps`,
     playStoreUrl: `https://play.google.com/store/search?q=${encodeURIComponent(name)}&c=apps`,
     app_store_url: `https://apps.apple.com/us/app/id${result.trackId}`,

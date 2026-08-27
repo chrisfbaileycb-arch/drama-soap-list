@@ -19,7 +19,7 @@ export const SponsorView: React.FC<SponsorViewProps> = ({ onSuccessReturn }) => 
   const [seriesTitle, setSeriesTitle] = useState('');
   const [targetUrl, setTargetUrl] = useState('');
   const [genre, setGenre] = useState('Romance');
-  const [posterUrl, setPosterUrl] = useState('https://picsum.photos/seed/drama_sponsor_preview/450/800');
+  const [posterUrl, setPosterUrl] = useState('https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/09/b8/b5/09b8b5ea-1678-7b83-a417-7612f0f5b11a/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/256x256bb.jpg');
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submittedId, setSubmittedId] = useState<string | null>(null);
@@ -47,7 +47,7 @@ export const SponsorView: React.FC<SponsorViewProps> = ({ onSuccessReturn }) => 
           contact_email: contactEmail.trim(),
           series_title: seriesTitle.trim(),
           target_url: targetUrl.trim(),
-          poster_url: posterUrl.trim() || `https://picsum.photos/seed/${encodeURIComponent(studioName)}/450/800`,
+          poster_url: posterUrl.trim() || `https://www.google.com/s2/favicons?domain=google.com&sz=128`,
           package_tier: packageTier,
           package_name: packageTier === 599 ? 'Premium Featured' : 'Standard Spotlight',
           weeks,
@@ -418,16 +418,19 @@ export const SponsorView: React.FC<SponsorViewProps> = ({ onSuccessReturn }) => 
             </div>
 
             {/* Mock Card */}
-            <div className="rounded-2xl border border-[#E7DFD5] p-3.5 bg-[#FAF8F5]">
-              <div className="flex gap-3 mb-2.5">
-                <div className="w-20 aspect-[9/14] rounded-xl overflow-hidden bg-[#E7DFD5] flex-shrink-0 relative">
+            <div className="rounded-2xl border border-[#E7DFD5] p-4 bg-[#FAF8F5]">
+              <div className="flex items-start gap-3.5 mb-2.5">
+                <div className="relative flex-shrink-0">
                   <img
                     src={posterUrl}
-                    alt="Preview Poster"
-                    className="w-full h-full object-cover"
+                    alt="Preview App Icon"
+                    className="w-14 h-14 rounded-2xl object-cover border border-[#E7DFD5] bg-[#F5F2EB] shadow-xs flex-shrink-0"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = `https://www.google.com/s2/favicons?domain=google.com&sz=128`;
+                    }}
                   />
-                  <span className="absolute top-1 left-1 px-1.5 py-0.5 rounded bg-black/70 text-[8px] font-black text-amber-300">
-                    SPOTLIGHT
+                  <span className="absolute -bottom-0.5 -right-0.5 px-1 py-0.2 rounded bg-amber-400 text-[8px] font-black text-[#1C1917]">
+                    PROMO
                   </span>
                 </div>
 

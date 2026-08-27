@@ -21,6 +21,7 @@ export interface GooglePlayScraperItem {
   icon?: string;
   icon_url?: string;
   iconUrl?: string;
+  logoUrl?: string;
   screenshots?: string[];
   playStoreUrl?: string;
   platform_url?: string;

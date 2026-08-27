@@ -4,10 +4,10 @@ import { INITIAL_PLATFORMS } from '@/constants/dramaData';
 import { parseGooglePlayScraperJson } from '@/services/appStoreDiscovery';
 
 const STORAGE_KEYS = {
-  PLATFORMS: 'soaplist_platforms_v3',
-  FEATURED_ORDER: 'soaplist_featured_order_v3',
-  SPONSORS: 'soaplist_sponsors_v3',
-  ADMIN: 'soaplist_admin_user_v3',
+  PLATFORMS: 'soaplist_platforms_v4',
+  FEATURED_ORDER: 'soaplist_featured_order_v4',
+  SPONSORS: 'soaplist_sponsors_v4',
+  ADMIN: 'soaplist_admin_user_v4',
 };
 
 const INITIAL_FEATURED_ORDER = INITIAL_PLATFORMS.filter(p => p.featured).map(p => p.id);
@@ -19,8 +19,8 @@ const INITIAL_SPONSORS: SponsorInquiry[] = [
     contact_name: 'Elena Rostova',
     contact_email: 'elena@apexhorizon.la',
     series_title: 'Forbidden Luna: Her Secret Heir',
-    target_url: 'https://play.google.com/store/apps/details?id=com.apexhorizon.drama',
-    poster_url: 'https://picsum.photos/seed/poster101/400/600',
+    target_url: 'https://play.google.com/store/apps/details?id=com.storymatrix.dramabox',
+    poster_url: 'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/09/b8/b5/09b8b5ea-1678-7b83-a417-7612f0f5b11a/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/256x256bb.jpg',
     package_tier: 599,
     package_name: 'Premium Featured',
     weeks: 4,
@@ -34,8 +34,8 @@ const INITIAL_SPONSORS: SponsorInquiry[] = [
     contact_name: 'Marcus Chen',
     contact_email: 'marcus@vanguardmedia.io',
     series_title: 'The CEO’s Double Life',
-    target_url: 'https://play.google.com/store/apps/details?id=com.vanguard.shorts',
-    poster_url: 'https://picsum.photos/seed/poster102/400/600',
+    target_url: 'https://play.google.com/store/apps/details?id=com.newleaf.chsp',
+    poster_url: 'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/30/ca/4f/30ca4fa2-bc42-3b24-11fa-ef3661be4949/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/256x256bb.jpg',
     package_tier: 399,
     package_name: 'Standard Spotlight',
     weeks: 2,
